@@ -559,7 +559,7 @@ function openForecast(){
   resetForecast();
 }
 
-// Chart aufsetzen (Balken optisch wie ARD: dick, weißer Rand)
+// Chart aufsetzen (Balken optisch wie ARD: dick, ohne Rand, Labels über Balken)
 function initForecastChart(){
   const ctx = document.getElementById("forecastChart");
   if (forecastChart) { forecastChart.destroy(); }
@@ -571,25 +571,24 @@ function initForecastChart(){
         label: "Prognose",
         data: forecastList.map(p => p.shownPct),
         backgroundColor: forecastList.map(p => p.color),
-        borderColor: "#ffffff",
-        borderWidth: 3,
-        barThickness: 48,             // dicke Balken
+        borderWidth: 0,                 // ❌ kein Rand
+        barThickness: 48,               // dicke Balken
         maxBarThickness: 56,
-        categoryPercentage: 0.72,     // Abstand zwischen Säulen
+        categoryPercentage: 0.72,       // Abstand zwischen Säulen
         barPercentage: 0.92
       }]
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
-      animation: false,               // wir animieren manuell
+      animation: false,                 // wir animieren manuell
       plugins: {
         legend: { display: false },
         datalabels: {
           color: "#fff",
           anchor: "end",
-          align: "start",
-          offset: -4,
+          align: "end",                 // ✔️ über Balken
+          offset: -6,
           font: { weight: "bold", size: 16 },
           formatter: (value) => value > 0 ? commaDe(value) + " %" : ""
         }
